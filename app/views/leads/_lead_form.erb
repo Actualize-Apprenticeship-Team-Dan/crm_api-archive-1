@@ -76,6 +76,10 @@
         </div>
         <div class="update-lead-form">
           <div class="form-group">
+            <%= label_tag :outreach_notes, "Latest Outreach", class: "form-control-label" %>
+            <%= text_field_tag :outreach_notes, nil, class: "form-control" %>
+          </div>
+          <div class="form-group">
             <div class="i-checks">
               <%= f.label :connected, "Connected?" %>
               <%= f.check_box :connected %>
