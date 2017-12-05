@@ -52,7 +52,7 @@ class LeadsController < ApplicationController
 
   def update
     @lead = Lead.find_by(id: params[:id])
-    unless params[:outreach_notes] = ""
+    unless (params[:outreach_notes] == '')
       outreach = Outreach.new(
                               lead_id: @lead.id,
                               notes: params[:outreach_notes]
