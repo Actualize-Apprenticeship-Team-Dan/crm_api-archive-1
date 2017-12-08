@@ -5,7 +5,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
     data: {
       leads: [],
       time_format: "12/25/17",
-      url: "https://www.google.com/"
+      url: "https://www.google.com/",
+      search: '',
     },
     mounted: function() {
       $.get('/api/v1/leads.json').success(function(response) {
@@ -19,7 +20,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
       }
     },
     computed: {
+      filteredLeads: function() {
+            var search = this.search.toLowerCase();
+            return this.leads.filter(
+              function(lead){
+                return lead.first_name.toLowerCase().includes(search) ||
+                  lead.last_name.toLowerCase().includes(search) ||
+                  lead.email.toLowerCase().includes(search);
+                }
+              )
+        }
+    }
 
-    },
   });
-});
+})
