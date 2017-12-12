@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get '/token' => 'leads#token'
   post '/voice' => 'leads#voice'
   post '/text' => 'leads#text'
+  post '/auto_text/:id' => 'leads#auto_text'
 
   get '/settings/edit' => 'settings#edit'
   patch '/settings' => 'settings#update'

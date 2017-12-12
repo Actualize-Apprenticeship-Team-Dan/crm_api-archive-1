@@ -32,6 +32,16 @@
               <button id="button-call" class="btn btn-primary">Call</button>
               <button id="button-hangup" class="btn btn-danger">Hangup</button>
             </div>
+              <div class="card-header d-flex align-items-center">
+                <h2 class="h5 display">Auto Text</h2>
+              </div>
+            <div class="col-lg-6">
+           
+                  <%= form_tag "/auto_text/#{@lead.id}", method: :post do %>
+                    <input type="submit" value="Send Auto-Text" class="btn btn-info" style="margin-top: 15px;margin-left:5px;">
+                  <% end %>
+            </div>
+
             <div id="log"></div>
             <div class="card-header d-flex align-items-center">
               <h2 class="h5 display">Send Custom Text Message</h2>
