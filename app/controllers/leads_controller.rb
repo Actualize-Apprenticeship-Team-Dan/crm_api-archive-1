@@ -114,8 +114,8 @@ class LeadsController < ApplicationController
       to: params[:phone],
       body: params[:body]
     )
-
-    render nothing: true
+    flash[:success] = "Text message sent!"
+    redirect_to "/leads/#{params[:lead_id]}/edit"
   end
 
   def no_leads
