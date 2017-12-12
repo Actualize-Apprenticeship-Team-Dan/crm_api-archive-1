@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class SettingsControllerTest < ActionDispatch::IntegrationTest
+class UsersettingsControllerTest < ActionDispatch::IntegrationTest
   # test "the truth" do
   #   assert true
   # end
