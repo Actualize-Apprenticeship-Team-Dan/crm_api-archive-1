@@ -5,11 +5,9 @@
         <h1 class="h3">All Leads</h1>
       </header>
       <div class="row">
-        <%= form_tag('/leads', method: :get) do %>
-          <%= text_field_tag :search %>
-          <%= submit_tag "Search" %>
-        <% end %>
-
+        <div class="form-group">
+          <input type="text" v-model="search" class="form-control" placeholder="search" />
+        </div>
       </div>
 
       <div class="row">
@@ -27,7 +25,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="lead in leads" v-on:click="showEvents(lead)" v-bind:id="'lead-' + lead.id">
+              <tr v-for="lead in filteredLeads" v-on:click="showEvents(lead)" v-bind:id="'lead-' + lead.id">
                 <td>{{ moment(lead.created_at).format('dddd MMM Do YYYY, h:mm a') }}</td>
                 <td>{{ lead.first_name }}</td>
                 <td>{{ lead.last_name }}</td>

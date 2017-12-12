@@ -5,7 +5,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
     data: {
       leads: [],
       time_format: "12/25/17",
-      url: "https://www.google.com/"
+      url: "https://www.google.com/",
+      search: '',
     },
     mounted: function() {
       $.get('/api/v1/leads.json').success(function(response) {
@@ -18,13 +19,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
         return moment(date);
       },
       showEvents: function(lead) {
-        var $eventRow = $("#" + lead.id + "-events");  //creates a string with a lead id.
+        //creates a string with a lead id.
+        var $eventRow = $("#" + lead.id + "-events");  
         if ($eventRow.length === 0) { 
           var eventsString = "";
           for (event of lead.events) {
             eventsString += '<div class="row">';
             eventsString += '<div class="col-md-2">' + event.name + '</div>';
             eventsString += '<div class="col-md-4">' + this.moment(event.created_at).format('dddd MMM Do YYYY, h:mm a') + '</div>';
+            // this loop double checks whether or not the event exists already, if it doesn't it will create a string into the html.
             eventsString += '</div>';
           };                                  // this loop double checks whether or not the event exists already, if it doesn't it will create a string into the html.
           var $row = $('#lead-' + lead.id);
@@ -33,16 +36,31 @@ document.addEventListener("DOMContentLoaded", function(event) {
             var $newRow = $('<tr id=' + idString + '><td colspan="7">EVENTS: No Events</td></tr>');
           } else {
             var idString = '' + lead.id + '-events';
-            var $newRow = $('<tr id=' + idString + '><td colspan="7">' + eventsString + "</td></tr>");
-          };                    // no events == no events
+            var $newRow = $('<tr id=' + idString + ' class="event-row"><td colspan="7">' +
+              // no events == no events 
+              eventsString + "</td></tr>");
+          };                
           $row.after($newRow);
         } else {
-          $eventRow.remove(); // if events row exists then remove tho row(toggle). 
+          // if events row exists then remove tho row(toggle).
+          $eventRow.remove();  
         }
       }
     },
     computed: {
+      filteredLeads: function() {
+        //removing any additional event 
+        $('.event-row').remove(); 
+        var search = this.search.toLowerCase();
+        return this.leads.filter(
+          function(lead){
+            return lead.first_name.toLowerCase().includes(search) ||
+              lead.last_name.toLowerCase().includes(search) ||
+              lead.email.toLowerCase().includes(search);
+            }
+          );
+        }
+    }
 
-    },
   });
-});
+})
