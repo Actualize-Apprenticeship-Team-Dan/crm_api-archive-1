@@ -2,11 +2,14 @@
 document.addEventListener("DOMContentLoaded", function(event) { 
   var app = new Vue({
     el: '#app',
-    data: {
-      leads: [],
-      time_format: "12/25/17",
-      url: "https://www.google.com/",
-      search: '',
+    data() {
+      return {
+        leads: [],
+        time_format: "12/25/17",
+        url: "https://www.google.com/",
+        search: '',
+        key: '',
+      };
     },
     mounted: function() {
       $.get('/api/v1/leads.json').success(function(response) {
@@ -17,7 +20,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
     methods: {
       moment: function(date) {
         return moment(date);
-      }
+      },
+      orderBy: function(col) {
+        this.key = col;
+        this.leads = _.orderBy(this.leads, this.key);
+      },
     },
     computed: {
       filteredLeads: function() {
@@ -27,9 +34,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 return lead.first_name.toLowerCase().includes(search) ||
                   lead.last_name.toLowerCase().includes(search) ||
                   lead.email.toLowerCase().includes(search);
-                }
-              )
-        }
+              }
+              );
+      } 
     }
 
   });
