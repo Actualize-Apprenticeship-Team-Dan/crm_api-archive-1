@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
         time_format: "12/25/17",
         url: "https://www.google.com/",
         search: '',
-        key: '',
         reverse: 1
       };
     },
