@@ -57,6 +57,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
           // if events row exists then remove tho row(toggle).
           $eventRow.remove();  
         }
+      }, 
+      eventAfterOutreach: function(lead){
+        if (lead.outreaches.length > 0){
+          if (lead.events.updated_at > lead.outreaches.updated_at){
+            return true
+          }
+        }
       }
     },
     computed: {

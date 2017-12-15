@@ -14,6 +14,10 @@
  *= require_self
  */
 
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+   background-color: #0cc6f4;
+}
+
 .alert.alert-dismissible {
   margin-top: 20px;
 }
