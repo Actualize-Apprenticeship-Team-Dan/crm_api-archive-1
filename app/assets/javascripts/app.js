@@ -2,11 +2,14 @@
 document.addEventListener("DOMContentLoaded", function(event) { 
   var app = new Vue({
     el: '#app',
-    data: {
-      leads: [],
-      time_format: "12/25/17",
-      url: "https://www.google.com/",
-      search: '',
+    data() {
+      return {
+        leads: [],
+        time_format: "12/25/17",
+        url: "https://www.google.com/",
+        search: '',
+        reverse: 1
+      };
     },
     mounted: function() {
       $.get('/api/v1/leads.json').success(function(response) {
@@ -17,6 +20,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
     methods: {
       moment: function(date) {
         return moment(date);
+      },
+      sortAscDec: function(col) {
+        if (this.reverse === 1) {
+          this.leads = _.orderBy(this.leads, col);
+          this.reverse *= -1;
+        } else {
+          this.leads = _.orderBy(this.leads, col, 'desc');
+          this.reverse *= -1;
+        }
       },
       showEvents: function(lead) {
         //creates a string with a lead id.
