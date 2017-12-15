@@ -23,12 +23,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
         return moment(date);
       },
       sortAscDec: function(col) {
-        this.key = col;
         if (this.reverse === 1) {
-          this.leads = _.orderBy(this.leads, this.key);
+          this.leads = _.orderBy(this.leads, col);
           this.reverse *= -1;
         } else {
-          this.leads = _.orderBy(this.leads, this.key, 'desc');
+          this.leads = _.orderBy(this.leads, col, 'desc');
           this.reverse *= -1;
         }
       },
