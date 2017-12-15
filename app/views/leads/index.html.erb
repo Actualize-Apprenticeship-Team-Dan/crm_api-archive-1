@@ -25,7 +25,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="lead in filteredLeads" v-on:click="showEvents(lead)" v-bind:id="'lead-' + lead.id">
+              <tr v-for="lead in filteredLeads" v-on:click="showEvents(lead)" v-bind:id="'lead-' + lead.id" v-bind:style="lead.outreaches.length === 0 ? 'background-color:#f7c204;' : ''">
                 <td>{{ moment(lead.created_at).format('dddd MMM Do YYYY, h:mm a') }}</td>
                 <td>{{ lead.first_name }}</td>
                 <td>{{ lead.last_name }}</td>
