@@ -60,9 +60,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
       }, 
       eventAfterOutreach: function(lead){
         if (lead.outreaches.length > 0){
-          if (lead.events.updated_at > lead.outreaches.updated_at){
-            return true
+          if (_.sortBy(lead.events, 'updated_at').reverse()[0].updated_at > _.sortBy(lead.outreaches, 'updated_at').reverse()[0].updated_at){
+            return 'background-color:#0cc6f4;';
+          } else {
+            return '';
           }
+        } else {
+          return 'background-color:orange';
         }
       }
     },
