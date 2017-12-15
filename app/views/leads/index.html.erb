@@ -16,12 +16,12 @@
             <thead>
               <tr>
                 <th>Created</th>
-                <th v-on:click="orderBy('first_name')">First Name</th>
-                <th v-on:click="orderBy('last_name')">Last Name</th>
-                <th v-on:click="orderBy('email')">Email</th>
-                <th v-on:click="orderBy('phone')">Phone</th>
-                <th v-on:click="orderBy('appointment_date')">Appointment Date</th>
-                <th v-on:click="orderBy('notes')">Notes</th>
+                <th v-on:click="sortAscDec('first_name')">First Name</th>
+                <th v-on:click="sortAscDec('last_name')">Last Name</th>
+                <th v-on:click="sortAscDec('email')">Email</th>
+                <th v-on:click="sortAscDec('phone')">Phone</th>
+                <th v-on:click="sortAscDec('appointment_date')">Appointment Date</th>
+                <th v-on:click="sortAscDec('notes')">Notes</th>
               </tr>
             </thead>
             <tbody>

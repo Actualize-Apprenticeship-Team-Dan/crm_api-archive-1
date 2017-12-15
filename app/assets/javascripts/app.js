@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         url: "https://www.google.com/",
         search: '',
         key: '',
+        reverse: 1
       };
     },
     mounted: function() {
@@ -21,9 +22,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
       moment: function(date) {
         return moment(date);
       },
-      orderBy: function(col) {
+      sortAscDec: function(col) {
         this.key = col;
-        this.leads = _.orderBy(this.leads, this.key);
+        if (this.reverse === 1) {
+          this.leads = _.orderBy(this.leads, this.key);
+          this.reverse *= -1;
+        } else {
+          this.leads = _.orderBy(this.leads, this.key, 'desc');
+          this.reverse *= -1;
+        }
       },
     },
     computed: {
