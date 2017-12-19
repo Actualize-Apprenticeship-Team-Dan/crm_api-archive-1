@@ -32,6 +32,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
       },
       showEvents: function(lead) {
         //creates a string with a lead id.
+        if (!lead) { return; }
         var $eventRow = $("#" + lead.id + "-events");  
         if ($eventRow.length === 0) { 
           var eventsString = "";
