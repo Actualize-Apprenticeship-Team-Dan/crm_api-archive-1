@@ -13,13 +13,16 @@ class Admin < ApplicationRecord
     Setting.create(admin_id: id)
   end
 
-
   def record_progress(lead)
     log = DailyProgressLog.find_or_create_by(admin_id: self.id, date: Date.today)
     log.increment(:processed)
     log.increment(:connects) if lead.connected
     log.increment(:sets) if lead.appointment_date
     log.save
+  end
+
+  def self.create_settings(current_user_id)
+    @setting = Setting.create(admin_id: current_user_id)
   end
 
 end

@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   post '/text' => 'leads#text'
   post '/auto_text/:id' => 'leads#auto_text'
 
+  get '/settings' => 'settings#new'
+  post '/settings' => 'settings#post'
+
   get '/settings/edit' => 'settings#edit'
   patch '/settings' => 'settings#update'
 
@@ -18,7 +21,6 @@ Rails.application.routes.draw do
 
   post '/incoming_voice' => 'webhooks#incoming_voice'
   post '/incoming_text' => 'webhooks#incoming_text'
-
 
 
   namespace :api do
