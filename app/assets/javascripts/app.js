@@ -57,6 +57,32 @@ document.addEventListener("DOMContentLoaded", function(event) {
           // if events row exists then remove tho row(toggle).
           $eventRow.remove();  
         }
+      }, 
+      rowColor: function(lead){
+        
+        if (!lead.outreaches.length){
+          return 'background-color:orange';
+        }
+
+        var latestEventDate = _
+          .chain(lead.events)
+          .orderBy('updated_at', ['desc'])
+          .head()
+          .value()
+          .updated_at;
+
+        var latestOutreachDate = _
+          .chain(lead.outreaches)
+          .orderBy('updated_at', ['desc'])
+          .head()
+          .value()
+          .updated_at;
+
+        if (latestEventDate > latestOutreachDate) {
+          return 'background-color:#0cc6f4;';
+        } else {
+          return '';
+        }
       }
     },
     computed: {

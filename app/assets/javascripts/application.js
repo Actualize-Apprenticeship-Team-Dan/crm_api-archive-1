@@ -15,4 +15,5 @@
 //= require vue
 //= require lodash 
 //= require moment
+//= require lodash
 //= require_tree .
