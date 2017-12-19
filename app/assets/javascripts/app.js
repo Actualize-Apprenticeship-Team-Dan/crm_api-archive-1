@@ -58,15 +58,30 @@ document.addEventListener("DOMContentLoaded", function(event) {
           $eventRow.remove();  
         }
       }, 
-      eventAfterOutreach: function(lead){
-        if (lead.outreaches.length > 0){
-          if (_.sortBy(lead.events, 'updated_at').reverse()[0].updated_at > _.sortBy(lead.outreaches, 'updated_at').reverse()[0].updated_at){
-            return 'background-color:#0cc6f4;';
-          } else {
-            return '';
-          }
-        } else {
+      rowColor: function(lead){
+        
+        if (!lead.outreaches.length){
           return 'background-color:orange';
+        }
+
+        var latestEventDate = _
+          .chain(lead.events)
+          .orderBy('updated_at', ['desc'])
+          .head()
+          .value()
+          .updated_at;
+
+        var latestOutreachDate = _
+          .chain(lead.outreaches)
+          .orderBy('updated_at', ['desc'])
+          .head()
+          .value()
+          .updated_at;
+
+        if (latestEventDate > latestOutreachDate) {
+          return 'background-color:#0cc6f4;';
+        } else {
+          return '';
         }
       }
     },
