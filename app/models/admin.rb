@@ -20,9 +20,4 @@ class Admin < ApplicationRecord
     log.increment(:sets) if lead.appointment_date
     log.save
   end
-
-  def self.create_settings(current_user_id)
-    @setting = Setting.create(admin_id: current_user_id)
-  end
-
 end

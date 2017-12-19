@@ -1,17 +1,6 @@
 class SettingsController < ApplicationController
-  # def new
-    
-  # end
-
-  # def create
-  #   @setting = Setting.create(
-  #                             admin_id: current_admin.id
-  #                             )
-  # end
-
   def edit
     @setting = current_admin.setting
-
   end
 
   def update
@@ -28,5 +17,4 @@ class SettingsController < ApplicationController
   def setting_params
     params.require(:setting).permit(:auto_text)
   end
-
 end
