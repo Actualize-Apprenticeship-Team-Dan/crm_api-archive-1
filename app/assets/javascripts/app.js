@@ -15,6 +15,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
       $.get('/api/v1/leads.json').success(function(response) {
         console.log(this);
         this.leads = response;
+        this.leads = _.map(this.leads, function(lead){
+          lead.events = _.orderBy(lead.events, 'created_at', 'desc');
+          return lead;
+        })
+        this.leads = _.orderBy(this.leads, 'events[0].created_at', 'desc');
       }.bind(this));
     },
     methods: {
