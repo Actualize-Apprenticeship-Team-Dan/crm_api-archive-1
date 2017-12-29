@@ -34,39 +34,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
           this.reverse *= -1;
         }
       },
-  
-      // autoText: function(lead){
-      //   console.log("Hello")
-      // },
-      // showEvents: function(lead) {
-      //   //creates a string with a lead id.
-      //   if (!lead) { return; }
-      //   var $eventRow = $("#" + lead.id + "-events");  
-      //   if ($eventRow.length === 0) { 
-      //     var eventsString = "";
-      //     for (event of lead.events) {
-      //       eventsString += '<div class="row">';
-      //       eventsString += '<div class="col-md-2">' + event.name + '</div>';
-      //       eventsString += '<div class="col-md-4">' + this.moment(event.created_at).format('dddd MMM Do YYYY, h:mm a') + '</div>';
-      //       // this loop double checks whether or not the event exists already, if it doesn't it will create a string into the html.
-      //       eventsString += '</div>';
-      //     };                                  // this loop double checks whether or not the event exists already, if it doesn't it will create a string into the html.
-      //     var $row = $('#lead-' + lead.id);
-      //     if (lead.events.length === 0) {
-      //       var idString = '' + lead.id + '-events';
-      //       var $newRow = $('<tr id=' + idString + '><td colspan="6">EVENTS: No Events</td><td><button class="btn btn-primary">Auto-text</button></td></tr>');
-      //     } else {
-      //       var idString = '' + lead.id + '-events';
-      //       var $newRow = $('<tr id=' + idString + ' class="event-row"><td colspan="6">' +
-      //         // no events == no events 
-      //         eventsString + "</td><td><button id='auto-text' onClick='app.autoText(lead)' class='btn btn-primary'>Auto-text</button></td></tr>");
-      //     };                
-      //     $row.after($newRow);
-      //   } else {
-      //     // if events row exists then remove tho row(toggle).
-      //     $eventRow.remove();  
-      //   }
-      // }, 
       rowColor: function(lead){
         
         if (!lead.outreaches.length){
