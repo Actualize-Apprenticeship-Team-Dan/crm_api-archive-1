@@ -1,4 +1,5 @@
 /* global Vue */
+Vue.config.delimiters = ['@{', '}'];
 document.addEventListener("DOMContentLoaded", function(event) { 
   var app = new Vue({
     el: '#app',

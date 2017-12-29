@@ -43,7 +43,11 @@
                         <div class="col-md-4">{{ moment(event.created_at).format('dddd MMM Do YYYY, h:mm a') }}</div>
                       </div>
                     </div>
-                    <td>button</td>
+                    <td>
+                      <form v-bind:action="'auto_text/' + lead.id" method="post">
+                        <button type="submit" class="btn btn-info"  style="margin-top: 15px;margin-left:5px;" >Auto-Text</button>
+                      </form>
+                    </td>
                   </td>
                  
                 </tr>

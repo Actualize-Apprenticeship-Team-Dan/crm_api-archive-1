@@ -1,5 +1,6 @@
 class LeadsController < ApplicationController
   before_action :authenticate_admin!, except: [:token, :voice, :text]
+  protect_from_forgery with: :null_session
 
   def index
     @all_leads_active = "active"
