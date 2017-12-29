@@ -14,12 +14,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
     mounted: function() {
       $.get('/api/v1/leads.json').success(function(response) {
         console.log(this);
-        this.leads = response;
-        this.leads = _.map(this.leads, function(lead){
-          lead.events = _.orderBy(lead.events, 'created_at', 'desc');
-          return lead;
-        })
-        this.leads = _.orderBy(this.leads, 'events[0].created_at', 'desc');
+        this.leads = _
+          .chain(response)
+          .map(function(lead){
+            lead.events = _.orderBy(lead.events, 'created_at', 'desc');
+            return lead;
+          })
+          .sortBy(function(lead){
+            return lead.events.length ? lead.events[0].created_at : lead.created_at;
+          })
+          .reverse()
+          .value();
       }.bind(this));
     },
     methods: {
