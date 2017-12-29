@@ -15,6 +15,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
       $.get('/api/v1/leads.json').success(function(response) {
         console.log(this);
         this.leads = response;
+        this.leads.map(function(lead){
+          app.$set(lead, 'showEvents', false);
+        });
       }.bind(this));
     },
     methods: {
@@ -30,17 +33,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
           this.reverse *= -1;
         }
       },
-      showEvents: function(lead) {
-        var r = document.getElementById("event-${lead.id}");
-        eventBoolean = !eventBoolean;
-        if (eventBoolean === true) {
-          // r.className = "event-display";
-          console.log("TRUE");
-          console.log(eventBoolean);
-        } else {
-          console.log("false");
-        }
-      },
+  
       // autoText: function(lead){
       //   console.log("Hello")
       // },

@@ -26,7 +26,7 @@
             </thead>
             <tbody>
               <template v-for="lead in filteredLeads">
-                <tr v-on:click="showEvents(lead)" v-bind:id="'lead-' + lead.id" v-bind:style=" rowColor(lead)">
+                <tr v-on:click="lead.showEvents=!lead.showEvents" v-bind:id="'lead-' + lead.id" v-bind:style=" rowColor(lead)">
                   <td>{{ moment(lead.created_at).format('dddd MMM Do YYYY, h:mm a') }}</td>
                   <td>{{ lead.first_name }}</td>
                   <td>{{ lead.last_name }}</td>
@@ -35,11 +35,17 @@
                   <td>{{ moment(lead.appointment_date).format('dddd MMM Do YYYY, h:mm a') }}</td>
                   <td>{{ lead.notes }}</td>
                 </tr>
-                <tr v-for="event in lead.events" v-bind:id="'events-' + lead.id">
-                  <td>{{ event.name }}</td>
-                  <td>
-                    {{ moment(event.created_at).format('dddd MMM Do YYYY, h:mm a')}}
+                <tr v-if="lead.showEvents" v-bind:id="'events-' + lead.id">
+                  <td colspan="6">
+                    <div v-for="event in lead.events">
+                      <div class="row">
+                        <div class="col-md-2">{{ event.name }}</div>
+                        <div class="col-md-4">{{ moment(event.created_at).format('dddd MMM Do YYYY, h:mm a') }}</div>
+                      </div>
+                    </div>
+                    <td>button</td>
                   </td>
+                 
                 </tr>
               </template>
             </tbody>
