@@ -1,5 +1,4 @@
 class SettingsController < ApplicationController
-
   def edit
     @setting = current_admin.setting
   end
@@ -18,5 +17,4 @@ class SettingsController < ApplicationController
   def setting_params
     params.require(:setting).permit(:auto_text)
   end
-
 end

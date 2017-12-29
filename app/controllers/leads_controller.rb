@@ -120,12 +120,19 @@ class LeadsController < ApplicationController
   end
 
   def auto_text
+    text =
+      if current_admin.setting.auto_text
+        current_admin.setting.auto_text
+      else
+        "This is Rena from The Actualize coding bootcamp. Do you have a minute to talk?"
+      end
+
     @lead = Lead.find(params[:id])
     @client = Twilio::REST::Client.new
     @client.messages.create(
       from: ENV['TWILIO_PHONE_NUMBER'],
       to: @lead.phone,
-      body: "Hi, #{@lead.first_name.partition(" ").first}! This is Rena from The Actualize coding bootcamp. Do you have a minute to talk?"
+      body: "Hi, #{@lead.first_name.partition(" ").first}! #{text}"
     )
     flash[:success] = "Auto text sent!"
     render :edit

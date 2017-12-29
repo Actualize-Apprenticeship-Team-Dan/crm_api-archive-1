@@ -19,6 +19,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
         this.leads.map(function(lead){
           app.$set(lead, 'showEvents', false);
         });
+        this.leads = _.map(this.leads, function(lead){
+          lead.events = _.orderBy(lead.events, 'created_at', 'desc');
+          return lead;
+        })
+        this.leads = _.orderBy(this.leads, 'events[0].created_at', 'desc');
       }.bind(this));
     },
     methods: {
