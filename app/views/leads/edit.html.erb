@@ -95,7 +95,7 @@
             <div class="text-history">
               <% @messages.each do |message| %>
                 <div class="text-bubble alert <%= message.from == "+17734666919" ? 'alert-info' : 'alert-success' %>" role="alert">
-                  <p><%= message.body  %></p>
+                  <p><%= message.body %></p>
                   <% message_sent = DateTime.rfc2822(message.date_sent) %>
                   <% if  %>
                     <% message_sent.year != Time.now.year %>
