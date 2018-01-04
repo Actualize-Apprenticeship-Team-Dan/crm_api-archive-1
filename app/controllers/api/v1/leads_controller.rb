@@ -1,7 +1,30 @@
 class Api::V1::LeadsController < ApplicationController
 
   def index
-    @leads = Lead.all
+    if params[:search] && params[:search].length
+      @leads = Lead
+        .joins(:events)
+        .select("leads.*, max(events.created_at) as date")
+        .where("lower(leads.first_name) LIKE ? OR lower(leads.last_name) LIKE ? OR lower(leads.email) LIKE ?", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%")
+        .group("leads.id")
+        .order(params[:sort] + ' ' + params[:direction])
+        .limit(50)
+    elsif params[:sort]
+      @leads = Lead
+        .joins(:events)
+        .select("leads.*, max(events.created_at) as date")
+        .group("leads.id")
+        .order(params[:sort] + ' ' + params[:direction])
+        .limit(50)
+    else 
+      @leads = Lead
+        .joins(:events)
+        .select("leads.*, max(events.created_at) as date")
+        .group("leads.id")
+        .order("date DESC")
+        .limit(50)
+    end
+
     render "index.json.jbuilder"
   end
 
