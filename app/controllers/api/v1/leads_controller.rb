@@ -3,28 +3,30 @@ class Api::V1::LeadsController < ApplicationController
   def index
     if params[:search] && params[:search].length
       @leads = Lead
+        .includes(:outreaches)
         .joins(:events)
-        .select("leads.*, max(events.created_at) as date")
+        .select("leads.*, max(events.created_at) as recent_event_date")
         .where("lower(leads.first_name) LIKE ? OR lower(leads.last_name) LIKE ? OR lower(leads.email) LIKE ?", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%")
         .group("leads.id")
         .order(params[:sort] + ' ' + params[:direction])
         .limit(50)
     elsif params[:sort]
       @leads = Lead
+        .includes(:outreaches)
         .joins(:events)
-        .select("leads.*, max(events.created_at) as date")
+        .select("leads.*, max(events.created_at) as recent_event_date")
         .group("leads.id")
         .order(params[:sort] + ' ' + params[:direction])
         .limit(50)
     else 
       @leads = Lead
+        .includes(:outreaches)
         .joins(:events)
-        .select("leads.*, max(events.created_at) as date")
+        .select("leads.*, max(events.created_at) as recent_event_date")
         .group("leads.id")
-        .order("date DESC")
+        .order("recent_event_date DESC")
         .limit(50)
     end
-
     render "index.json.jbuilder"
   end
 

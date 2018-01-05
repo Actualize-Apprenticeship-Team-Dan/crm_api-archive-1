@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         url: "https://www.google.com/",
         search: '',
         reverse: 1,
-        sort: 'date'
+        sort: 'recent_event_date'
       };
     },
     watch: {
@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         return moment(date);
       },
       sortAscDec: function(col) {
+        $('.event-row').remove(); 
         var direction = this.reverse === -1 ? 'ASC' : 'DESC';
         this.reverse *= -1;
         this.sort = col;
@@ -36,8 +37,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
         }.bind(this));
       },
       filter: function() {
+        $('.event-row').remove(); 
         var search = this.search.toLowerCase();
-        var direction = this.reverse === -1 ? 'ASC' : 'DESC';
+        var direction = this.reverse === 1 ? 'ASC' : 'DESC';
         $.get('/api/v1/leads.json?search=' + search + '&sort=' + this.sort + '&direction=' + direction).success(function(response) {
           this.leads = response;
         }.bind(this));
@@ -45,57 +47,38 @@ document.addEventListener("DOMContentLoaded", function(event) {
       showEvents: function(leadId) {
         var $row = $('#events-' + leadId);
         if ($row.is(':visible')) {
-          $row.fadeOut();
+          $row.hide();
           return;
         }
         $.get('/api/v1/leads/' + leadId + '.json').success(function(response){
           var events = response.events.map(function(event){
-            return '<div class="row"><div class="col-md-2">' + event.name + '</div><div class="col-md-4">' + this.moment(event.created_at).format('dddd MMM Do YYYY, h:mm a') + '</div></div>';
+            return '<div class="row" style="margin:0;"><div class="col-md-2">' + event.name + '</div><div class="col-md-4">' + this.moment(event.created_at).format('dddd MMM Do YYYY, h:mm a') + '</div></div>';
           });
           $row.empty();
           if (events.length){
-            $row.append('<td colspan="7">' + events.join('') + '</td>');
+            $row.append('<td class="event-row" colspan="7">' + events.join('') + '</td>');
           } else {
-            $row.append('<td colspan="7"><span>No Event History</span></td>');
+            $row.append('<td class="event-row" colspan="7"><span>No Event History</span></td>');
           }
           $row.fadeIn();
         })
       },
       rowColor: function(lead){
-        
-        // if (!lead.outreaches.length){
-        //   return 'background-color:orange';
-        // }
-
-        // var latestEventDate = _
-        //   .chain(lead.events)
-        //   .orderBy('updated_at', ['desc'])
-        //   .head()
-        //   .value()
-        //   .updated_at;
-
-        // var latestOutreachDate = _
-        //   .chain(lead.outreaches)
-        //   .orderBy('updated_at', ['desc'])
-        //   .head()
-        //   .value()
-        //   .updated_at;
-
-        // if (latestEventDate > latestOutreachDate) {
-        //   return 'background-color:#0cc6f4;';
-        // } else {
-        //   return '';
-        // }
-      }
-    },
-    computed: {
-      filteredLeads: function() {
-        //removing any additional event 
-        $('.event-row').remove(); 
-        var search = this.search.toLowerCase();
-        $.get('/api/v1/leads.json?filter=' + search).success(function(response) {
-          return response;
-        }.bind(this));
+        if (!lead.outreaches.length){
+          return 'background-color:orange';
+        }
+        var latestEventDate = lead.recent_event_date;
+        var latestOutreachDate = _
+          .chain(lead.outreaches)
+          .orderBy('updated_at', ['desc'])
+          .head()
+          .value()
+          .updated_at;
+        if (latestEventDate > latestOutreachDate) {
+          return 'background-color:#0cc6f4;';
+        } else {
+          return '';
+        }
       }
     }
 
