@@ -1,7 +1,22 @@
 class Api::V1::LeadsController < ApplicationController
 
   def index
-    @leads = Lead.all
+    if params[:sort]
+      @leads = Lead
+        .joins(:events)
+        .select('leads.*, max(events.created_at) as date')
+        .group('leads.id')
+        .order(params[:sort] + ' ' + params[:order])
+        .limit(50)
+    else
+      @leads = Lead
+        .joins(:events)
+        .select('leads.*, max(events.created_at) as date')
+        .group('leads.id')
+        .order('date DESC')
+        .limit(50)
+      end
+
     render "index.json.jbuilder"
   end
 
