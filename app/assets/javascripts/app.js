@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
       },
       rowColor: function(lead){
         if (!lead.outreaches.length){
-          return 'background-color:orange';
+          return 'background-color:#f7c204';
         }
         var latestEventDate = lead.recent_event_date;
         var latestOutreachDate = _
