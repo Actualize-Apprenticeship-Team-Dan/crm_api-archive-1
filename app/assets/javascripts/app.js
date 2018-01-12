@@ -50,19 +50,36 @@ document.addEventListener("DOMContentLoaded", function(event) {
           $row.hide();
           return;
         }
+        var that = this;
         $.get('/api/v1/leads/' + leadId + '.json').success(function(response){
-          var events = response.events.map(function(event){
-            return '<div class="row" style="margin:0;"><div class="col-md-2">' + event.name + '</div><div class="col-md-4">' + this.moment(event.created_at).format('dddd MMM Do YYYY, h:mm a') + '</div></div>';
+          var autotext = '<input type="submit" value="Send Auto-Text" id="text-' + response.id + '" class="btn btn-info" style="margin-top 15px; margin-left: auto;">';
+          var events = response.events.map(function(event) {
+            return '<div class="row" style="margin:0;"><div class="col-md-6">' + event.name + '</div><div class="col-md-6">' + this.moment(event.created_at).format('dddd MMM Do YYYY, h:mm a') + '</div></div>';
           });
           $row.empty();
           if (events.length){
-            $row.append('<td class="event-row" colspan="7">' + events.join('') + '</td>');
+            $row.append('<td class="event-row" colspan="5">' + events.join('') + '</td><td class="event-row" colspan="2">' + autotext + ' </td>');
           } else {
             $row.append('<td class="event-row" colspan="7"><span>No Event History</span></td>');
           }
           $row.fadeIn();
-        })
+          $('#text-' + leadId).on('click', function(){
+            that.autoTextButton(leadId);
+          });
+        });
       },
+
+      autoTextButton: function(leadId){
+        $.post('/auto_text/' + leadId + '.json')
+          .success(function(response) {
+            if (response.status == 200){
+              $('#text-' + leadId).val('Text Sent!');
+            } else {
+              $('#text-' + leadId).val('Text Failed!');
+            }
+          });
+      },
+
       rowColor: function(lead){
         if (!lead.outreaches.length){
           return 'background-color:#f7c204';
