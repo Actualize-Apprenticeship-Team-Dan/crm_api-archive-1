@@ -9,7 +9,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
         url: "https://www.google.com/",
         search: '',
         reverse: 1,
-        sort: 'recent_event_date'
+        sort: 'recent_event_date',
+        page: 1
       };
     },
     watch: {
@@ -79,6 +80,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
         } else {
           return '';
         }
+      },
+      moreLeads: function() {
+        var search = this.search.toLowerCase();
+        var direction = this.reverse === 1 ? 'ASC' : 'DESC';
+        $.get('/api/v1/leads.json?page=' + this.page + '&search=' + search + '&sort=' + this.sort + '&direction=' + direction).success(function(response) {
+          console.log(this);
+          this.leads = _.concat(this.leads, response);
+          this.page++;
+        }.bind(this));
       }
     }
 
