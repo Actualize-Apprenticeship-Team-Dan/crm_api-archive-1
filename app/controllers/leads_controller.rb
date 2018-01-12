@@ -131,14 +131,14 @@ class LeadsController < ApplicationController
     begin 
       @client.messages.create(
         from: ENV['TWILIO_PHONE_NUMBER'],
-        to: "dogs",#@lead.phone,
+        to: @lead.phone,
         body: "Hi, #{@lead.first_name.partition(" ").first}! #{text}"
       )
       flash[:success] = "Auto text sent!"
       respond_to do |format|
         format.html { render :edit }
         format.json { render json: { 
-          message: "message sent",
+          message: 'Message sent',
           status: 200 } }
       end
     rescue => error
