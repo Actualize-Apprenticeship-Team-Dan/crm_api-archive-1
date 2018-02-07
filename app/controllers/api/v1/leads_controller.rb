@@ -1,6 +1,8 @@
 class Api::V1::LeadsController < ApplicationController
 
   def index
+    offset = (params[:page].to_i*50) || 0
+    puts offset
     if params[:search] && params[:search].length
       @leads = Lead
         .includes(:outreaches)
@@ -10,6 +12,7 @@ class Api::V1::LeadsController < ApplicationController
         .group("leads.id")
         .order(params[:sort] + ' ' + params[:direction])
         .limit(50)
+        .offset(offset)
     elsif params[:sort]
       @leads = Lead
         .includes(:outreaches)
@@ -18,6 +21,7 @@ class Api::V1::LeadsController < ApplicationController
         .group("leads.id")
         .order(params[:sort] + ' ' + params[:direction])
         .limit(50)
+        .offset(offset)
     else 
       @leads = Lead
         .includes(:outreaches)
@@ -26,6 +30,7 @@ class Api::V1::LeadsController < ApplicationController
         .group("leads.id")
         .order("recent_event_date DESC")
         .limit(50)
+        .offset(offset)
     end
     render "index.json.jbuilder"
   end
