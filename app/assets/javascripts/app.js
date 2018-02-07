@@ -33,6 +33,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         var direction = this.reverse === -1 ? 'ASC' : 'DESC';
         this.reverse *= -1;
         this.sort = col;
+        this.page = 1;
         $.get('/api/v1/leads.json?sort=' + col + '&direction=' + direction).success(function(response) {
           this.leads = response;
         }.bind(this));
